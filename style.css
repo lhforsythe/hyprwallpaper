@@ -1,0 +1,10 @@
+.current_wallpaper {
+    border-radius: 20px;
+}
+
+.background {
+    background-color: rgba(38, 43, 39, 0.3);
+}
+.background > * {
+    opacity: 0.9;
+}
