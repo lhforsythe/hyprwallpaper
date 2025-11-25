@@ -4,8 +4,8 @@
   <!-- interface-name hyprwallpaper.ui -->
   <requires lib="gtk" version="4.16"/>
   <object class="GtkWindow" id="DaWindow">
-    <property name="default-height">551</property>
-    <property name="default-width">800</property>
+    <property name="default-height">400</property>
+    <property name="default-width">1000</property>
     <property name="decorated">True</property>
     <property name="title">Hyprwallpaper</property>
       <child>
@@ -52,7 +52,7 @@
         <child>
           <object class="GtkScrolledWindow">
             <property name="halign">baseline-center</property>
-            <property name="height-request">360</property>
+            <property name="height-request">500</property>
             <property name="margin-bottom">85</property>
             <property name="valign">end</property>
             <property name="width-request">900</property>

@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
     auto settingsDialog = builder->get_widget<Gtk::Dialog>("settingsDialog");
     container->add_css_class("background");
     setWallpaperBtn->add_css_class("btn");
+    settingsBtn->add_css_class("btn");
 
     string homeDir = getenv("HOME");
     string wallDirectory = homeDir + "/Pictures/Wallpapers"; //change this and recompile if you wanna' change where wallpapers are stored.
@@ -95,7 +96,7 @@ void getWallpapers(string& wD, Gtk::FlowBox*& grid) {
         wallpapers[i] = entry.path();
         auto curWallpaper = Gtk::make_managed<Gtk::Picture>();
         curWallpaper->add_css_class("current_wallpaper");
-        curWallpaper->set_size_request(280,170);
+        curWallpaper->set_size_request(260,150);
         curWallpaper->set_content_fit(Gtk::ContentFit::COVER);
         curWallpaper->set_filename(wallpapers[i]);
         grid->append(*curWallpaper);
