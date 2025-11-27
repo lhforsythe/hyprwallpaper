@@ -8,6 +8,7 @@ using namespace std;
 void createDirectory(string);
 string getCurrentWallpaper();
 void getWallpapers(string&, Gtk::FlowBox*&);
+void getDirectories(string&, Glib::RefPtr<Gtk::StringList>&);
 
 int main(int argc, char *argv[]) {
     auto app = Gtk::Application::create("org.lforsythe.hyprwallpaper", Gio::Application::Flags::NON_UNIQUE);
@@ -24,6 +25,10 @@ int main(int argc, char *argv[]) {
     auto container = builder->get_widget<Gtk::Box>("container");
     auto settingsBtn = builder->get_widget<Gtk::Button>("settingsBtn");
     auto settingsDialog = builder->get_widget<Gtk::Dialog>("settingsDialog");
+    auto dropDown = builder->get_widget<Gtk::DropDown>("zeDropDown");
+    Glib::RefPtr<Gio::ListModel> PtrList = dropDown->get_model(); //get the model from the drop down, which is the StringList
+    Glib::RefPtr<Gtk::StringList> directoryList = dynamic_pointer_cast<Gtk::StringList>(PtrList); //cast from a pointer (what get_model() poops out) to a regular old StringList object (so append method works)
+
     container->add_css_class("background");
     setWallpaperBtn->add_css_class("btn");
     settingsBtn->add_css_class("btn");
@@ -36,6 +41,7 @@ int main(int argc, char *argv[]) {
     selectedWallpaper->set_size_request(400,320);
     selectedWallpaper->set_content_fit(Gtk::ContentFit::COVER);
     getWallpapers(wallDirectory, grid);
+    getDirectories(wallDirectory, directoryList);
 
     grid->signal_child_activated().connect([selectedWallpaper](Gtk::FlowBoxChild* child) {
         auto wallpaperSelection = dynamic_cast<Gtk::Picture*>(child->get_child());
@@ -93,14 +99,30 @@ void getWallpapers(string& wD, Gtk::FlowBox*& grid) {
     string wallpapers[100]; //store max 100 wallpapers, which I think should be sufficient, but maybe I'll change to a dynamic array later
     int i = 0;
     for (const auto & entry : filesystem::directory_iterator(wD)) {
-        wallpapers[i] = entry.path();
-        auto curWallpaper = Gtk::make_managed<Gtk::Picture>();
-        curWallpaper->add_css_class("current_wallpaper");
-        curWallpaper->set_size_request(260,150);
-        curWallpaper->set_content_fit(Gtk::ContentFit::COVER);
-        curWallpaper->set_filename(wallpapers[i]);
-        grid->append(*curWallpaper);
-        i++;
-    } //would you just feed file paths directly into new Gtk::Photo objects? Or, would you store them
-      //in this array and access them later? I dunno'.
+        if (!entry.is_directory()) {
+            wallpapers[i] = entry.path();
+            auto curWallpaper = Gtk::make_managed<Gtk::Picture>();
+            curWallpaper->add_css_class("current_wallpaper");
+            curWallpaper->set_size_request(260,150);
+            curWallpaper->set_content_fit(Gtk::ContentFit::COVER);
+            curWallpaper->set_filename(wallpapers[i]);
+            grid->append(*curWallpaper);
+            i++;
+        }
+    }
+}
+// possibly combine these at a later time to improve disk efficiency (I don't think this contributes much, but an extra read is an extra read).
+void getDirectories(string& wD, Glib::RefPtr<Gtk::StringList>& directoryList) {
+    string directories[50]; //store max 50 directories (these are the categories)
+    int workingDirCharCount = wD.length() + 1; //Wallpaper directory char count, plus one to include the extra backslash.
+    string directoryNm = "blank";
+    int j = 0;
+    for (const auto & entry : filesystem::directory_iterator(wD)) {
+        if (entry.is_directory()) {
+            directories[j] = entry.path();
+            directoryNm = directories[j].erase(0, workingDirCharCount);
+            directoryList->append(directoryNm);
+            j++;
+        }
+    }
 }

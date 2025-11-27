@@ -37,6 +37,26 @@
               </object>
             </child>
             <child>
+              <object class="GtkDropDown" id="zeDropDown">
+                <property name="halign">center</property>
+                <property name="height-request">6</property>
+                <property name="margin-bottom">19</property>
+                <property name="margin-start">13</property>
+                <property name="margin-top">19</property>
+                <property name="width-request">130</property>
+                <property name="model">directoryList</property>
+                <property name="css-classes">dropdown</property>
+                <property name="enable-search">true</property>
+                <child>
+                  <object class="GtkStringList" id="directoryList">
+                    <items>
+                      <item translatable="yes">Category</item>
+                    </items>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
               <object class="GtkButton" id="settingsBtn">
                 <property name="halign">center</property>
                 <property name="height-request">6</property>

@@ -10,6 +10,33 @@
     font-weight: bold;
     color:rgba(255,255,255,0.8);
 }
+.dropdown > button {
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background-color: rgba(29, 35, 48, 0.4);
+    background-image: none;
+    font-weight: bold;
+    color:rgba(255,255,255,0.8);
+}
+.dropdown > button label {
+    padding-left:15px;
+}
+.dropdown popover > * {
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background-color: rgba(29, 35, 48, 0.4);
+    background-image: none;
+    font-weight: bold;
+    color:rgba(255,255,255,0.8);
+}
+.dropdown:hover > button {
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    background-image: none;
+    font-weight: bold;
+    color:rgba(255,255,255,0.8);
+}
 .btn:hover {
     border-radius: 20px;
     border: 1px solid rgba(255,255,255,0.5);
