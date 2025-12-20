@@ -8,7 +8,7 @@
 * List all images in wallpaper directory without manual input ✅
 * Connection to hyprpaper to allow wallpaper change ✅
 * Multi-monitor support (not yet, currently just changes the wallpaper on all monitors)
-* Multi-directory support (with categorization of wallpaper types)
+* Multi-directory support ✅
 * Directory refresh
 * Proper settings page (with configs like changing the default wallpaper directory)
 * Possibly implement a way to access, browse, and apply wallpapers from online sites.
