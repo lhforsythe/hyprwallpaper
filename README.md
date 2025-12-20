@@ -1,5 +1,5 @@
 # hyperWallpaper -- a GUI for hyprpaper written in C++ and GTK that is directly compatible with immutable setups
-### NOTE: This project is very similar to WayPaper, but differs in that it is less dependent on external depedencies (pun-intended) as these are difficult to maintain on an immutable distro (which I run). The project also aims to be lighter and more efficient, as it makes use of C++ rather than Python. Thus, once I get the project to a more complete state, I will package it as a flatpak.
+### NOTE: This project is very similar to WayPaper, but differs in that it is less dependent on external depedencies (pun-intended) as these are difficult to maintain on an immutable distro (which I previously ran). The project also aims to be lighter and more efficient, as it makes use of C++ rather than Python. Thus, once I get the project to a more complete state, I will package it as a flatpak.
 
 <img width="960" height="1046" alt="image" src="https://github.com/user-attachments/assets/5b02f622-ec01-492a-b6db-224554d29c72" />
 
