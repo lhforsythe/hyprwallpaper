@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Created with Cambalache 0.96.1 -->
 <interface>
-  <!-- interface-name hyprwallpaper.ui -->
+  <!-- interface-name hyprwallpaper.ui- -->
   <requires lib="gtk" version="4.16"/>
   <object class="GtkWindow" id="DaWindow">
     <property name="default-height">400</property>

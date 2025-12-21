@@ -163,7 +163,7 @@ void getDirectories(string& wD, Glib::RefPtr<Gtk::StringList>& directoryList) {
     }
 }
 
-void reloadWallpapers(string& wD, Gtk::FlowBox*& grid) {
+void reloadWallpapers(string& wD, Gtk::FlowBox*& grid) { // reload wallpapers via grid clear and re-adding pictures within directory to grid
 
     while (auto child = grid->get_first_child()) {
         grid->remove(*child);
