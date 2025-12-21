@@ -10,6 +10,7 @@ string getCurrentWallpaper();
 void getWallpapers(string&, Gtk::FlowBox*&);
 void reloadWallpapers(string&, Gtk::FlowBox*&);
 void getDirectories(string&, Glib::RefPtr<Gtk::StringList>&);
+void changeDefDir(string, string, string);
 
 int main(int argc, char *argv[]) {
     auto app = Gtk::Application::create("org.lforsythe.hyprwallpaper", Gio::Application::Flags::NON_UNIQUE);
@@ -27,7 +28,8 @@ int main(int argc, char *argv[]) {
     auto settingsBtn = builder->get_widget<Gtk::Button>("settingsBtn");
     auto settingsDialog = builder->get_widget<Gtk::Dialog>("settingsDialog");
     auto dropDown = builder->get_widget<Gtk::DropDown>("zeDropDown");
-    Glib::RefPtr<Gio::ListModel> PtrList = dropDown->get_model(); //get the model from the drop down, which is the StringList
+    auto configEntry = builder->get_widget<Gtk::Entry>("configEntry");
+    Glib::RefPtr<Gio::ListModel> PtrList = dropDown->get_model(); //get the model from the dropdown, which is the StringList
     Glib::RefPtr<Gtk::StringList> directoryList = dynamic_pointer_cast<Gtk::StringList>(PtrList); //cast from a pointer (what get_model() poops out) to a regular old StringList object (so append method works)
 
     container->add_css_class("background");
@@ -35,7 +37,19 @@ int main(int argc, char *argv[]) {
     settingsBtn->add_css_class("btn");
 
     string homeDir = getenv("HOME");
-    string wallDirectory = homeDir + "/Pictures/Wallpapers"; //change this and recompile if you wanna' change where wallpapers are stored.
+    string defWallDirectory = homeDir + "/Pictures/Wallpapers"; //default wallpaper directory, fed into config if not generated
+    string wallDirectory;
+    string configFile = defWallDirectory + "/wallconfig.txt";
+    if (!filesystem::exists(configFile)) {
+        system(("touch " + configFile).c_str());
+        ofstream configFS(configFile);
+        configFS << defWallDirectory;
+        configFS.close();
+    }
+    ifstream configIS(configFile);
+    getline(configIS, wallDirectory);
+    configEntry->set_placeholder_text(wallDirectory);
+
     string curWallDirectory = wallDirectory;
     createDirectory(wallDirectory);
     selectedWallpaper->set_filename(getCurrentWallpaper());
@@ -71,13 +85,28 @@ int main(int argc, char *argv[]) {
         // reload grid
         reloadWallpapers(curWallDirectory, grid);
     });
-
+    configEntry->signal_activate().connect([configEntry, wallDirectory, configFile, &grid]() {
+        string entStr = (configEntry->get_text()).c_str();
+        configEntry->set_placeholder_text(entStr);
+        changeDefDir(entStr, configFile, wallDirectory);
+        reloadWallpapers(entStr, grid);
+    });
     app->signal_startup().connect([&]() {
         app->add_window(*pWindow);
         app->hold();
         pWindow->set_visible(true);
     });
     return app->run(argc, argv);
+}
+
+void changeDefDir(string entStr, string configFile, string wD) {
+     ofstream configFS(configFile);
+     configFS << entStr;
+     configFS.close();
+     // I think this is unnecessary since entStr is already in memory, but I can't figure it out
+     ifstream configIS(configFile);
+     getline(configIS, wD);
+     configIS.close(); // probably could just copy entStr to wD, but Idk
 }
 
 void createDirectory(string wD) {
