@@ -13,12 +13,13 @@ void getDirectories(string&, Glib::RefPtr<Gtk::StringList>&);
 void changeDefDir(string, string, string);
 
 int main(int argc, char *argv[]) {
+    string homeDir = getenv("HOME");
     auto app = Gtk::Application::create("org.lforsythe.hyprwallpaper", Gio::Application::Flags::NON_UNIQUE);
     auto css = Gtk::CssProvider::create();
 
-    auto builder = Gtk::Builder::create_from_file(ROOT"/hyprwallpaper.ui");
+    auto builder = Gtk::Builder::create_from_file(homeDir + "/hyprwallpaper.ui");
     auto pWindow = builder->get_widget<Gtk::Window>("DaWindow");
-    css->load_from_path(ROOT"/style.css");
+    css->load_from_path(homeDir + "/style.css");
     Gtk::StyleProvider::add_provider_for_display(pWindow->get_display(), css,
   GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
     auto grid = builder->get_widget<Gtk::FlowBox>("DaGrid");
@@ -36,7 +37,6 @@ int main(int argc, char *argv[]) {
     setWallpaperBtn->add_css_class("btn");
     settingsBtn->add_css_class("btn");
 
-    string homeDir = getenv("HOME");
     string defWallDirectory = homeDir + "/Pictures/Wallpapers"; //default wallpaper directory, fed into config if not generated
     string wallDirectory;
     string configFile = defWallDirectory + "/wallconfig.txt";
