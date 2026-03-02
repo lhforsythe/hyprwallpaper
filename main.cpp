@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
     setWallpaperBtn->signal_clicked().connect([selectedWallpaper]() {
         auto selWallFile = selectedWallpaper->get_file();
         string selWallPath = selWallFile->get_path().c_str();
-        system(("hyprctl hyprpaper reload ,\"" + selWallPath + "\"").c_str());
+        system(("hyprctl hyprpaper reload ," + selWallPath).c_str());
         cout << "wp set to " << selWallPath << endl;
     });
     settingsBtn->signal_clicked().connect([settingsDialog]() {
