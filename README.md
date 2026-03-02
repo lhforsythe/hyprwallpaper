@@ -19,7 +19,7 @@ NOTE: This project is very similar to WayPaper, but differs in that it is less d
 Nothing except hyprpaper, which is usually already bundled with defualt hyprland installs.
 
 ### Installation:
-Will upload a proper way to install, but for right now it can be compiled using CMake and the gtkmm4 development package. There is also a buggy pre-release that I've uploaded to this repository. Flatpak and/or appimage is a definite to-do.
+Will upload a proper way to install, but for right now it can be compiled using CMake and the gtkmm4 development package. There is also a buggy pre-release that I've uploaded to this repository. Flatpak and/or appimage is a definite to-do. To use the pre-release, you must have the gtk4 package installed. Also, make sure the folder ~/Pictures exists, as this is where a subdirectory will get created.
 
 ### First launch:
 After launching, a directory called "Wallpapers" will be placed within $HOME/Photos (if there isn't already one). Place all wallpapers within this directory. Any sub-directories created within this folder will show up as wallpaper categories within the app (it treats sub-directories as differing wallpaper categories).
